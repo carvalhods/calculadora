@@ -5,81 +5,47 @@ from behave import given, when, then
 from operacoes import Operacoes
 
 
-##########################################
-# Cenário: Testar o método somar()
-##########################################
-@given(u'o valor "{num1}" e o valor "{num2}" para somar')
-def step_impl(context, num1, num2):
-    context.num1 = int(num1)
-    context.num2 = int(num2)
+
+@given(u'os seguintes valores')
+def step_impl(context):
+    for row in context.table:        
+        num1 = int(row['valor1'])
+        num2 = int(row['valor2'])
+
+    context.operacoes = Operacoes(num1, num2)
 
 
+@then(u'a aplicação deve retornar o valor "{valor}"')
+def step_impl(context, valor):
+    assert context.retorno == int(valor)
+
+##########################################
+# Cenário: Desenvolver função de adição
+##########################################
 @when(u'a aplicação executar uma soma')
-def step_impl(context):
-    operacoes = Operacoes(context.num1, context.num2)
-    context.retorno = operacoes.somar()
-
-
-@then(u'a aplicação deve retornar o valor "{soma}" para somar')
-def step_impl(context, soma):
-    assert context.retorno == int(soma)
-
+def step_impl(context):    
+    context.retorno = context.operacoes.somar()
 
 ##############################################
-# Cenário: Testar o método subtrair()
+# Cenário: Desenvolver função de subtração
 ##############################################
-@given(u'o valor "{num1}" e o valor "{num2}" para subtrair')
-def step_impl(context, num1, num2):
-    context.num1 = int(num1)
-    context.num2 = int(num2)
-
-
 @when(u'a aplicação executar uma subtração')
-def step_impl(context):
-    operacoes = Operacoes(context.num1, context.num2)
-    context.retorno = operacoes.subtrair()
-
-
-@then(u'a aplicação deve retornar o valor "{subtr}" para subtrair')
-def step_impl(context, subtr):
-    assert context.retorno == int(subtr)
-
+def step_impl(context):    
+    context.retorno = context.operacoes.subtrair()
 
 ##############################################
-# Cenário: Testar o método multiplicar()
+# Cenário: Desenvolver função de multiplicação
 ##############################################
-@given(u'o valor "{num1}" e o valor "{num2}" para multiplicar')
-def step_impl(context, num1, num2):
-    context.num1 = int(num1)
-    context.num2 = int(num2)
-
-
 @when(u'a aplicação executar uma multiplicação')
-def step_impl(context):
-    operacoes = Operacoes(context.num1, context.num2)
-    context.retorno = operacoes.multiplicar()
-
-
-@then(u'a aplicação deve retornar o valor "{multipl}" para multiplicar')
-def step_impl(context, multipl):
-    assert context.retorno == int(multipl)
+def step_impl(context):    
+    context.retorno = context.operacoes.multiplicar()
 
 
 ##############################################
-# Cenário: Testar o método dividir()
+# Cenário: Desenvolver função de divisão
 ##############################################
-@given(u'o valor "{num1}" e o valor "{num2}" para dividir')
-def step_impl(context, num1, num2):
-    context.num1 = int(num1)
-    context.num2 = int(num2)
-
-
 @when(u'a aplicação executar uma divisão')
-def step_impl(context):
-    operacoes = Operacoes(context.num1, context.num2)
-    context.retorno = operacoes.dividir()
+def step_impl(context):    
+    context.retorno = context.operacoes.dividir()
 
 
-@then(u'a aplicação deve retornar o valor "{div}" para dividir')
-def step_impl(context, div):
-    assert context.retorno == int(div)

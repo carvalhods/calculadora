@@ -1,5 +1,5 @@
 class Operacoes(object):
-
+    
     __num1 = 0
     __num2 = 0
 
